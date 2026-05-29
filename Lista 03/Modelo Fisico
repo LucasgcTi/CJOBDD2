@@ -1,0 +1,70 @@
+/* Lógico_1: */
+
+CREATE TABLE Clientes (
+    ID INTEGER PRIMARY KEY,
+    Nome VARCHAR,
+    CPF INTEGER,
+    RG INTEGER,
+    Telefone INTEGER,
+    Email VARCHAR,
+    Endereco VARCHAR
+);
+
+CREATE TABLE Funcionario (
+    id_funcionario INTEGER PRIMARY KEY,
+    Nome VARCHAR,
+    Cargo VARCHAR,
+    CPF INTEGER,
+    Telefone INTEGER,
+    Salario INTEGER,
+    Data_admissao INTEGER,
+    fk_Atendimento_id_atendimento INTEGER
+);
+
+CREATE TABLE Documento (
+    id_documento INTEGER PRIMARY KEY,
+    tipo_documento VARCHAR,
+    numero_documento INTEGER,
+    data_emissao INTEGER,
+    orgao_emissor VARCHAR,
+    fk_Clientes_ID INTEGER
+);
+
+CREATE TABLE Atendimento (
+    id_atendimento INTEGER PRIMARY KEY,
+    data_atendimento INTEGER,
+    tipo_servico VARCHAR,
+    valor INTEGER,
+    status_atendimento VARCHAR,
+    fk_Clientes_ID INTEGER
+);
+
+CREATE TABLE Registro (
+    id_registro INTEGER PRIMARY KEY,
+    tipo_registro VARCHAR,
+    livro INTEGER,
+    folha INTEGER,
+    termo VARCHAR,
+    data_registro INTEGER,
+    fk_Atendimento_id_atendimento INTEGER
+);
+ 
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_2
+    FOREIGN KEY (fk_Atendimento_id_atendimento)
+    REFERENCES Atendimento (id_atendimento)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Documento ADD CONSTRAINT FK_Documento_2
+    FOREIGN KEY (fk_Clientes_ID)
+    REFERENCES Clientes (ID)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Atendimento ADD CONSTRAINT FK_Atendimento_2
+    FOREIGN KEY (fk_Clientes_ID)
+    REFERENCES Clientes (ID)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Registro ADD CONSTRAINT FK_Registro_2
+    FOREIGN KEY (fk_Atendimento_id_atendimento)
+    REFERENCES Atendimento (id_atendimento)
+    ON DELETE RESTRICT;
